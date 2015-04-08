@@ -40,15 +40,15 @@ class myContentHandler(ContentHandler):
             if name == 'title':
                 line = "<li><strong>Title: " + self.theContent + "</strong>."
                 # To avoid Unicode trouble
-                print line.encode('utf-8') 
+                fich.write(line.encode('utf-8')) 
                 self.inContent = False
                 self.theContent = ""
             elif name == 'link':
-                print "Link: <a href='" + self.theContent + "'>" + self.theContent + "</a>.<br>"
+                fich.write("Link: <a href='" + self.theContent + "'>" + self.theContent + "</a>.<br>")
                 self.inContent = False
                 self.theContent = ""
             elif name == 'description':
-                print "Descripcion: " + self.theContent + ".<br><br>"
+                fich.write("Descripcion: " + self.theContent + ".<br><br>")
                 self.inContent = False
                 self.theContent = ""    
             
@@ -57,6 +57,10 @@ class myContentHandler(ContentHandler):
             self.theContent = self.theContent + chars
             
 # --- Main prog
+
+fich = open("resultado.html", "w")
+
+fich.write("<h1>Noticias de Barrapunto</h1><br><br>")
 
 if len(sys.argv)<2:
     print "Usage: python xml-parser-barrapunto.py <document>"
@@ -75,4 +79,4 @@ theParser.setContentHandler(theHandler)
 xmlFile = open(sys.argv[1],"r")
 theParser.parse(xmlFile)
 
-print "Parse complete"
+print "Acabado!"
